@@ -121,29 +121,209 @@ WHERE market_date IN (
 |2020-10-12T00:00:00.000Z|11296.082031|11428.813477|11288.627930|11384.181641|11384.181641        |19968627060|
 |2020-10-13T00:00:00.000Z|11296.082031|11428.813477|11288.627930|11384.181641|11384.181641        |19968627060|
 */
-   
 
-DROP TABLE IF EXISTS frame_example;
-CREATE TEMP TABLE frame_example AS
-WITH input_data (val) AS (
- VALUES
- (1),
- (1),
- (2),
- (6),
- (9),
- (9),
- (20),
- (20),
- (25)
+DROP TABLE IF EXISTS updated_daily_btc;
+CREATE TEMP TABLE updated_daily_btc AS
+SELECT
+  market_date,
+  COALESCE(
+    open_price,
+      LAG(open_price, 1) OVER (ORDER BY market_date),
+      LAG(open_price, 2) OVER (ORDER BY market_date)
+  ) AS open_price,
+  COALESCE(
+    high_price,
+      LAG(high_price, 1) OVER (ORDER BY market_date),
+      LAG(high_price, 2) OVER (ORDER BY market_date)
+  ) AS high_price,
+  COALESCE(
+    low_price,
+      LAG(low_price, 1) OVER (ORDER BY market_date),
+      LAG(low_price, 2) OVER (ORDER BY market_date)
+  ) AS low_price,
+  COALESCE(
+    close_price,
+      LAG(close_price, 1) OVER (ORDER BY market_date),
+      LAG(close_price, 2) OVER (ORDER BY market_date)
+  ) AS close_price,
+  COALESCE(
+    adjusted_close_price,
+      LAG(adjusted_close_price, 1) OVER (ORDER BY market_date),
+      LAG(adjusted_close_price, 2) OVER (ORDER BY market_date)
+  ) AS adjusted_close_price,
+   COALESCE(
+    volume,
+      LAG(volume, 1) OVER (ORDER BY market_date),
+      LAG(volume, 2) OVER (ORDER BY market_date)
+  ) AS volume
+FROM trading.daily_btc;
+
+
+
+--2. Analysis
+/*a.
+****************************************** 
+Q1: What is the average daily volume of Bitcoin 
+for the last 7 days?
++ 
+Q2: Create a 1/0 flag if a specific day is higher
+than the last 7 days volume average.
+*********************************************/
+WITH window_calculations AS (
+SELECT
+  market_date,
+  volume,
+  ROUND(
+    AVG(volume) OVER (
+    ORDER BY market_date
+    RANGE BETWEEN '7 DAYS' PRECEDING AND '1 DAY' PRECEDING)
+  ) AS past_weekly_avg_volume
+FROM updated_daily_btc
 )
 SELECT
-  val,
-  ROW_NUMBER() OVER w AS _row_number,
-  DENSE_RANK() OVER w AS _dense_rank
-FROM input_data
-WINDOW
-  w AS (ORDER BY val);
+  market_date,
+  volume,
+  past_weekly_avg_volume,
+  CASE 
+    WHEN volume > past_weekly_avg_volume THEN 1
+    ELSE 0
+    END AS volume_flag
+FROM window_calculations
+ORDER BY market_date DESC
+LIMIT 10;
 
--- inspect the dataset
-SELECT * FROM frame_example;
+/*Result:
+|market_date             |volume      |past_weekly_avg_volume|volume_flag|
+|------------------------|------------|----------------------|-----------|
+|2021-02-24T00:00:00.000Z|88364793856 |73509817753           |1          |
+|2021-02-23T00:00:00.000Z|106102492824|69359402048           |1          |
+|2021-02-22T00:00:00.000Z|92052420332 |67219042453           |1          |
+|2021-02-21T00:00:00.000Z|51897585191 |69983483887           |0          |
+|2021-02-20T00:00:00.000Z|68145460026 |70284197619           |0          |
+|2021-02-19T00:00:00.000Z|63495496918 |72149846802           |0          |
+|2021-02-18T00:00:00.000Z|52054723579 |76340445121           |0          |
+|2021-02-17T00:00:00.000Z|80820545404 |77266237191           |1          |
+|2021-02-16T00:00:00.000Z|77049582886 |79374846334           |0          |
+|2021-02-15T00:00:00.000Z|77069903166 |82860177694           |0          |
+*/
+
+
+/*b.
+****************************************** 
+Q3: What is the percentage of weeks (starting
+on a Monday) where there are 4 or more days with
+increased volume?
++ 
+Q4: CHow many high volume weeks are there broken
+down by year for the weeks with 5-7 days above 
+the 7 day volume average excluding 2021?
+*********************************************/
+--break down by week
+WITH window_calculations AS (
+SELECT
+  market_date,
+  volume,
+  ROUND(
+    AVG(volume) OVER (
+    ORDER BY market_date
+    RANGE BETWEEN '7 DAYS' PRECEDING AND '1 DAY' PRECEDING)
+  ) AS past_weekly_avg_volume
+FROM updated_daily_btc
+),
+--generate the date
+date_calculations AS (
+SELECT
+  market_date,
+  DATE_TRUNC('week', market_date)::DATE start_of_week,
+  volume,
+  CASE
+    WHEN volume > past_weekly_avg_volume THEN 1
+    ELSE 0
+    END AS volume_flag
+FROM window_calculations
+),
+--aggregate the metrics
+aggregated_weeks AS (
+SELECT
+  start_of_week,
+  SUM(volume_flag) AS weekly_high_volume_days
+  FROM date_calculations
+  GROUP BY start_of_week
+)
+--calculate the percentage
+SELECT
+  weekly_high_volume_days,
+  ROUND (
+    100 * COUNT(*)/SUM(COUNT(*)) OVER (), 
+    2) AS percentage_of_weeks
+FROM aggregated_weeks
+GROUP BY weekly_high_volume_days
+ORDER BY weekly_high_volume_days;
+
+/* Result:
+|weekly_high_volume_days |percentage_of_weeks|
+|------------------------|-------------------|
+|0                       |6.23               |
+|1                       |13.65              |
+|2                       |20.47              |
+|3                       |20.47              |
+|4                       |18.99              |
+|5                       |11.87              |
+|6                       |6.23               |
+|7                       |2.08               |
+*/
+
+--breakdown by year
+WITH window_calculations AS (
+SELECT
+  market_date,
+  volume,
+  ROUND(
+    AVG(volume) OVER (
+    ORDER BY market_date
+    RANGE BETWEEN '7 DAYS' PRECEDING AND '1 DAY' PRECEDING)
+  ) AS past_weekly_avg_volume
+FROM updated_daily_btc
+),
+--generate the date
+date_calculations AS (
+SELECT
+  market_date,
+  DATE_TRUNC('week', market_date)::DATE start_of_week,
+  volume,
+  CASE
+    WHEN volume > past_weekly_avg_volume THEN 1
+    ELSE 0
+    END AS volume_flag
+FROM window_calculations
+),
+--aggregate the metrics
+aggregated_weeks AS (
+SELECT
+  start_of_week,
+  SUM(volume_flag) AS weekly_high_volume_days
+  FROM date_calculations
+  GROUP BY start_of_week
+)
+--calculate the percentage (by year)
+SELECT
+  EXTRACT(YEAR FROM start_of_week) AS market_year,
+  COUNT(*) AS high_volume_weeks,
+  ROUND(100 * COUNT(*) / SUM(COUNT(*)) OVER (), 2) AS percentage_of_total
+FROM aggregated_weeks
+WHERE weekly_high_volume_days >= 5
+AND start_of_week < '2021-01-01'::DATE
+GROUP BY 1
+ORDER BY 1;
+
+/*Result:
+|market_year             |high_volume_weeks|percentage_of_total|
+|------------------------|-----------------|-------------------|
+|2014                    |2                |2.99               |
+|2015                    |3                |4.48               |
+|2016                    |13               |19.40              |
+|2017                    |17               |25.37              |
+|2018                    |8                |11.94              |
+|2019                    |11               |16.42              |
+|2020                    |13               |19.40              |
+*/
