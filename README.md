@@ -424,7 +424,7 @@ There are 1 values for 60 and 150 day outliers for the majority of the rows or i
 
 **ILLUSTRATION:**
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/SMA.gif">
+  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/SMA.png">
 </p>
 
 #### **Weighted moving average**
