@@ -18,13 +18,21 @@
 </p>
 
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-intro.gif">
+  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-cover.gif">
 </p>
 
 ## Table of contents
 <!--ts-->
    * [Overview](#OVERVIEW)
    * [Solutions](#SOLUTIONS)
+     * [Data Exploration](#data-exploration)
+     * [Weekly Volume Comparison Analysis](#weekly-volume-comparison-analysis)
+       * [Average Volume](#average-volumes)
+       * [High Volume Weeks](#high-volume-weeks)
+     * [Statistical Analysis](#statistical-analysis)
+       * [Simple Moving Average](#simple-moving-average)
+       * [Weighted Moving Average](#weighted-moving-average)
+       * [EWMA](#exponential-weighted-moving-average-ewma)
 
 
 ---
@@ -38,11 +46,10 @@ This case study is contained within the [Serious SQL](https://www.datawithdanny.
 * Ordered analytical window functions (clause **```FROM```**, **```WHERE```** filters, **```ON```** table join conditions, **```GROUP BY```**, **```SELECT```** aggregate function calculations,  **```HAVING```**, **```ORDER BY```**, **```LIMIT```**)
 
 ### Advanced Window Functions
-* Proper usage of **LEAD** and **LAG** functions with a view on data philosophy
+* Proper usage of **```LEAD```** and **```LAG```** functions with a view on data philosophy
 * Null propagation to identify rows with NULL values 
-* Using COALESCE to replace missing values 
-* Using the OFFSET and LAG/LEAD functions to skip rows
-* How to UPDATE, INSERT and DELETE records from tables (also known as DML - data manipulation language!)
+* Using **```COALESCE```** to replace missing values 
+* Using the **```OFFSET```** and **```LAG/LEAD```** functions to skip rows
 * Basic cumulative sums
 * Using a WINDOW clause at the end of a query to reduce code repetition
 * Window frame components
@@ -168,7 +175,7 @@ The following are a set of questions that i would use to practice using SQL wind
 4. How many high volume weeks are there broken down by year for the weeks with 5-7 days above the 7 day volume average excluding 2021?
 
 #### **Average Volumes**
-This section contain solution for Question 1 and 2
+> This section contains solution for Question 1 and 2
 ```sql
 WITH window_calculations AS (
 SELECT
@@ -209,7 +216,7 @@ LIMIT 10;
 |2021-02-15T00:00:00.000Z|77069903166 |82860177694           |0          |
 
 #### **High Volume Weeks**
-
+> This section contains solution for Question 3 and 4
 1. **Break down by week**
 ```sql
 WITH window_calculations AS (
@@ -412,6 +419,13 @@ LIMIT 10;
 |2021-02-16T00:00:00.000Z|49199.871094|0         |0         |1         |1          |
 |2021-02-15T00:00:00.000Z|47945.058594|0         |0         |1         |1          |
 
+**FINDING:**
+There are 1 values for 60 and 150 day outliers for the majority of the rows or is it expected.
+
+**ILLUSTRATION:**
+<p align="center">
+  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/SMA.gif">
+</p>
 
 #### **Weighted moving average**
 
@@ -537,3 +551,12 @@ SELECT
 FROM ewma_output
 ORDER BY market_date, metric_name;
 ```  
+
+**ILLUSTRATION:**
+<p align="center">
+  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/EWMA.png">
+</p>
+
+___________________________________
+
+<p>&copy; 2021 Leah Nguyen</p>
