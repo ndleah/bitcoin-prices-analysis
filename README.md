@@ -56,7 +56,7 @@ This case study is contained within the [Serious SQL](https://www.datawithdanny.
 ---
 ## SOLUTIONS
 ### Data Exploration
-1. Identify Null Rows
+1. **Identify Null Rows**
 ```sql 
 SELECT *
 FROM trading.daily_btc
@@ -87,7 +87,7 @@ WHERE
 |2020-10-13T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
 
 
-2. Filling & Update Null Values
+2. **Filling & Update Null Values**
 ```sql
 WITH april_17_data AS (
   SELECT
@@ -111,7 +111,7 @@ FROM april_17_data;
 |2020-04-17T00:00:00.000Z|null        |6640.454102   |6640.454102        |
 |2020-04-18T00:00:00.000Z|7092.291504 |null          |7092.291504        |
 
-3.  Update Tables
+3.  **Update Tables**
 ```sql
 DROP TABLE IF EXISTS updated_daily_btc;
 CREATE TEMP TABLE updated_daily_btc AS
