@@ -1,7 +1,6 @@
 # Bitcoin-Trading-Volume-And-Prices
  [![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/nduongthucanh?tab=repositories)
 [![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/nduongthucanh) 
-![fork](https://img.shields.io/github/forks/nduongthucanh/Health-Analytics-Mini-Case-Study) ![star](https://img.shields.io/github/stars/nduongthucanh/Health-Analytics-Mini-Case-Study)
 
 
 
