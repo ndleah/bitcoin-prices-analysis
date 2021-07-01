@@ -1,18 +1,13 @@
-# Bitcoin-Trading-Volume-And-Prices
  [![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/nduongthucanh?tab=repositories)
 [![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/nduongthucanh) 
+
+  <img src="https://forthebadge.com/images/badges/built-with-love.svg">
+  <img src="https://forthebadge.com/images/badges/powered-by-coffee.svg">
+  <img src="https://forthebadge.com/images/badges/check-it-out.svg">
 
 # BITCOIN TRADING VOLUME AND PRICES ANALYSIS <img src="https://s3.amazonaws.com/thinkific-import/357412/n0nS0vA3RmOtzsH99jyf_Data_With_Danny_Round_Logo_png" align="right" width="120" />
 
 
-<p align="center">
-  <img src="https://forthebadge.com/images/badges/built-with-love.svg">
-  <img src="https://forthebadge.com/images/badges/powered-by-coffee.svg">
-</p>
-
-<p align="center">
-  <img src="https://forthebadge.com/images/badges/check-it-out.svg">
-</p>
 
 <p align="center">
   <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-cover.gif">
