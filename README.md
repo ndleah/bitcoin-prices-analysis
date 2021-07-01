@@ -2,7 +2,7 @@
  [![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/nduongthucanh?tab=repositories)
 [![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/nduongthucanh) 
 
-# BITCOIN TRADING VOLUME AND PRICES ANALYSIS
+# BITCOIN TRADING VOLUME AND PRICES ANALYSIS <img src="https://s3.amazonaws.com/thinkific-import/357412/n0nS0vA3RmOtzsH99jyf_Data_With_Danny_Round_Logo_png" align="right" width="120" />
 
 
 <p align="center">
@@ -554,6 +554,15 @@ ORDER BY market_date, metric_name;
   <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/EWMA.png">
 </p>
 
+# Contribution
+
+Contributions, issues, and feature requests are welcome!
+
+To contribute to Patronify, see the GitHub documentation on **[creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)**.
+
+# Support
+
+Give a ⭐️ if you like this project!
 ___________________________________
 
 <p>&copy; 2021 Leah Nguyen</p>
