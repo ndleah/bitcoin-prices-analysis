@@ -1,16 +1,29 @@
- [![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/nduongthucanh?tab=repositories)
-[![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/nduongthucanh) 
+![Star Badge](https://img.shields.io/static/v1?label=%F0%9F%8C%9F&message=If%20Useful&style=style=flat&color=BC4E99)
+![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
+[![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/nduongthucanh)
+[![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/nduongthucanh?tab=repositories)
 
-# Bitcoin Prices Analysis <img src="https://s3.amazonaws.com/thinkific-import/357412/n0nS0vA3RmOtzsH99jyf_Data_With_Danny_Round_Logo_png" align="right" width="120" />
+# Bitcoin Prices Analysis 
+
+<p align="center">
+  <img src="https://forthebadge.com/images/badges/built-with-love.svg">
+  <img src="https://forthebadge.com/images/badges/powered-by-coffee.svg">
+</p>
+
+<p align="center">
+  <img src="https://forthebadge.com/images/badges/check-it-out.svg">
+</p>
+
+ <br /> 
 
 <p align="center">
   <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-cover.gif">
 </p>
 
-## Table of contents
+## 📕 Table of contents
 <!--ts-->
-   * [Overview](#OVERVIEW)
-   * [Solutions](#SOLUTIONS)
+   * 🛠️ [Overview](#️-overview)
+   * 🚀 [Solutions](#solution)
      * [Data Exploration](#data-exploration)
      * [Weekly Volume Comparison Analysis](#weekly-volume-comparison-analysis)
        * [Average Volume](#average-volumes)
@@ -23,7 +36,7 @@
 
 ---
   
-## OVERVIEW
+## 🛠️ Overview
 This case study is contained within the [Serious SQL](https://www.datawithdanny.com) by [Danny Ma](https://www.linkedin.com/in/datawithdanny/). With this case study, I covered almost several practices of window functions, including:
 
 ### Components of Window Functions
@@ -40,7 +53,7 @@ This case study is contained within the [Serious SQL](https://www.datawithdanny.
 * Using a WINDOW clause at the end of a query to reduce code repetition
 * Window frame components
 ---
-## SOLUTIONS
+## 🚀 Solution
 ### Data Exploration
 1. **Identify Null Rows**
 ```sql 
@@ -547,7 +560,7 @@ ORDER BY market_date, metric_name;
 
 Contributions, issues, and feature requests are welcome!
 
-To contribute to Patronify, see the GitHub documentation on **[creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)**.
+To contribute to this project, see the GitHub documentation on **[creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)**.
 
 # Support
 
