@@ -1,7 +1,7 @@
 ![Star Badge](https://img.shields.io/static/v1?label=%F0%9F%8C%9F&message=If%20Useful&style=style=flat&color=BC4E99)
 ![Open Source Love](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)
-[![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/nduongthucanh)
-[![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/nduongthucanh?tab=repositories)
+[![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/ndleah)
+[![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/ndleah?tab=repositories)
 
 # Bitcoin Prices Analysis 
 
@@ -17,7 +17,7 @@
  <br /> 
 
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-cover.gif">
+  <img width="100%" height="100%" src="https://github.com/ndleah/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-cover.gif">
 </p>
 
 ## 📕 Table of contents
@@ -32,7 +32,6 @@
        * [Simple Moving Average](#simple-moving-average)
        * [Weighted Moving Average](#weighted-moving-average)
        * [EWMA](#exponential-weighted-moving-average-ewma)
-
 
 ---
   
@@ -84,7 +83,6 @@ WHERE
 |2020-10-09T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
 |2020-10-12T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
 |2020-10-13T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
-
 
 2. **Filling & Update Null Values**
 ```sql
@@ -272,7 +270,6 @@ ORDER BY weekly_high_volume_days;
 |6                       |6.23               |
 |7                       |2.08               |
 
-
 1. **Break down by year**
 ```sql
 WITH window_calculations AS (
@@ -423,7 +420,7 @@ There are 1 values for 60 and 150 day outliers for the majority of the rows or i
 
 **ILLUSTRATION:**
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/SMA.png">
+  <img width="100%" height="100%" src="https://github.com/ndleah/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/SMA.png">
 </p>
 
 #### **Weighted moving average**
@@ -553,7 +550,7 @@ ORDER BY market_date, metric_name;
 
 **ILLUSTRATION:**
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/nduongthucanh/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/EWMA.png">
+  <img width="100%" height="100%" src="https://github.com/ndleah/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/EWMA.png">
 </p>
 
 # Contribution
@@ -568,3 +565,5 @@ Give a ⭐️ if you like this project!
 ___________________________________
 
 <p>&copy; 2021 Leah Nguyen</p>
+
+
