@@ -3,22 +3,12 @@
 [![View My Profile](https://img.shields.io/badge/View-My_Profile-green?logo=GitHub)](https://github.com/ndleah)
 [![View Repositories](https://img.shields.io/badge/View-My_Repositories-blue?logo=GitHub)](https://github.com/ndleah?tab=repositories)
 
-# Bitcoin Prices Analysis 
-
-<p align="center">
-  <img src="https://forthebadge.com/images/badges/built-with-love.svg">
-  <img src="https://forthebadge.com/images/badges/powered-by-coffee.svg">
-</p>
-
-<p align="center">
-  <img src="https://forthebadge.com/images/badges/check-it-out.svg">
-</p>
+# Bitcoin Prices Analysis <img src="https://i.pinimg.com/736x/8b/f4/cb/8bf4cba38bf9ce86c18183e62251d6f5.jpg" align="right" width="120" />
+> This case study is contained within the [Serious SQL](https://www.datawithdanny.com) by [Danny Ma](https://www.linkedin.com/in/datawithdanny/).
 
  <br /> 
 
-<p align="center">
-  <img width="100%" height="100%" src="https://github.com/ndleah/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/bitcoin-cover.gif">
-</p>
+
 
 ## 📕 Table of contents
 <!--ts-->
@@ -26,35 +16,15 @@
    * 🚀 [Solutions](#solution)
      * [Data Exploration](#data-exploration)
      * [Weekly Volume Comparison Analysis](#weekly-volume-comparison-analysis)
-       * [Average Volume](#average-volumes)
-       * [High Volume Weeks](#high-volume-weeks)
      * [Statistical Analysis](#statistical-analysis)
-       * [Simple Moving Average](#simple-moving-average)
-       * [Weighted Moving Average](#weighted-moving-average)
-       * [EWMA](#exponential-weighted-moving-average-ewma)
 
----
   
 ## 🛠️ Overview
-This case study is contained within the [Serious SQL](https://www.datawithdanny.com) by [Danny Ma](https://www.linkedin.com/in/datawithdanny/). With this case study, I covered almost several practices of window functions, including:
 
-### Components of Window Functions
-* **```PARTITION BY```** Clause and Multiple Aggregations
-* Calculating over an entire dataset using the empty **```OVER```** 
-* Ordered analytical window functions (clause **```FROM```**, **```WHERE```** filters, **```ON```** table join conditions, **```GROUP BY```**, **```SELECT```** aggregate function calculations,  **```HAVING```**, **```ORDER BY```**, **```LIMIT```**)
-
-### Advanced Window Functions
-* Proper usage of **```LEAD```** and **```LAG```** functions with a view on data philosophy
-* Null propagation to identify rows with NULL values 
-* Using **```COALESCE```** to replace missing values 
-* Using the **```OFFSET```** and **```LAG/LEAD```** functions to skip rows
-* Basic cumulative sums
-* Using a WINDOW clause at the end of a query to reduce code repetition
-* Window frame components
 ---
 ## 🚀 Solution
 ### Data Exploration
-1. **Identify Null Rows**
+📍 **Identify Null Rows**
 ```sql 
 SELECT *
 FROM trading.daily_btc
@@ -63,20 +33,7 @@ WHERE (
   close_price + adjusted_close_price + volume 
 ) IS NULL;
 ```
-OR
-```sql
-SELECT *
-FROM trading.daily_btc
-WHERE
-  market_date IS NULL
-  OR open_price IS NULL
-  OR high_price IS NULL
-  OR low_price IS NULL
-  OR close_price IS NULL
-  OR adjusted_close_price IS NULL
-  OR volume IS NULL;
-```
-**Result:**
+
 |market_date             |open_price  |high_price  |low_price   |close_price |adjusted_close_price|volume      |
 |------------------------|------------|------------|------------|------------|--------------------|------------|
 |2020-04-17T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
@@ -84,7 +41,7 @@ WHERE
 |2020-10-12T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
 |2020-10-13T00:00:00.000Z|null        |null        |null        |null        |null                |null        |
 
-2. **Filling & Update Null Values**
+📍 **Filling & Update Null Values**
 ```sql
 WITH april_17_data AS (
   SELECT
@@ -101,14 +58,14 @@ SELECT
   COALESCE(open_price, lag_open_price) AS coalesce_open_price
 FROM april_17_data;
 ```
-**Result:**
+
 |market_date             |open_price  |lag_open_price|coalesce_open_price|
 |------------------------|------------|--------------|-------------------|
 |2020-04-16T00:00:00.000Z|6640.454102 |null          |6640.454102        |
 |2020-04-17T00:00:00.000Z|null        |6640.454102   |6640.454102        |
 |2020-04-18T00:00:00.000Z|7092.291504 |null          |7092.291504        |
 
-3.  **Update Tables**
+📍 **Update Tables**
 ```sql
 DROP TABLE IF EXISTS updated_daily_btc;
 CREATE TEMP TABLE updated_daily_btc AS
@@ -155,14 +112,14 @@ WHERE market_date IN (
   '2020-10-13'
 );
 ```
-**Result:**
+
 |market_date             |open_price  |high_price  |low_price   |close_price |adjusted_close_price|volume     |
 |------------------------|------------|------------|------------|------------|--------------------|-----------|
 |2020-04-17T00:00:00.000Z|6640.454102 |7134.450684 |6555.504395 |7116.804199 |7116.804199         |46783242377|
 |2020-10-09T00:00:00.000Z|10677.625000|10939.799805|10569.823242|10923.627930|10923.627930        |21962121001|
 |2020-10-12T00:00:00.000Z|11296.082031|11428.813477|11288.627930|11384.181641|11384.181641        |19968627060|
 |2020-10-13T00:00:00.000Z|11296.082031|11428.813477|11288.627930|11384.181641|11384.181641        |19968627060|
----
+
 ### Weekly Volume Comparison Analysis
 The following are a set of questions that i would use to practice using SQL window functions as well as discover insights in this case study:
 
@@ -171,7 +128,7 @@ The following are a set of questions that i would use to practice using SQL wind
 3. What is the percentage of weeks (starting on a Monday) where there are 4 or more days with increased volume?
 4. How many high volume weeks are there broken down by year for the weeks with 5-7 days above the 7 day volume average excluding 2021?
 
-#### **Average Volumes**
+📍 **Average Volumes**
 > This section contains solution for Question 1 and 2
 ```sql
 WITH window_calculations AS (
@@ -198,7 +155,6 @@ ORDER BY market_date DESC
 LIMIT 10;
 ```
 
-**Result:**
 |market_date             |volume      |past_weekly_avg_volume|volume_flag|
 |------------------------|------------|----------------------|-----------|
 |2021-02-24T00:00:00.000Z|88364793856 |73509817753           |1          |
@@ -212,7 +168,7 @@ LIMIT 10;
 |2021-02-16T00:00:00.000Z|77049582886 |79374846334           |0          |
 |2021-02-15T00:00:00.000Z|77069903166 |82860177694           |0          |
 
-#### **High Volume Weeks**
+ 📍 **High Volume Weeks**
 > This section contains solution for Question 3 and 4
 1. **Break down by week**
 ```sql
@@ -258,7 +214,6 @@ GROUP BY weekly_high_volume_days
 ORDER BY weekly_high_volume_days;
 ```
 
-**Result:**
 |weekly_high_volume_days |percentage_of_weeks|
 |------------------------|-------------------|
 |0                       |6.23               |
@@ -270,7 +225,8 @@ ORDER BY weekly_high_volume_days;
 |6                       |6.23               |
 |7                       |2.08               |
 
-1. **Break down by year**
+**Break down by year**
+
 ```sql
 WITH window_calculations AS (
 SELECT
@@ -315,7 +271,6 @@ GROUP BY 1
 ORDER BY 1;
 ```
 
-**Result:**
 |market_year             |high_volume_weeks|percentage_of_total|
 |------------------------|-----------------|-------------------|
 |2014                    |2                |2.99               |
@@ -325,9 +280,10 @@ ORDER BY 1;
 |2018                    |8                |11.94              |
 |2019                    |11               |16.42              |
 |2020                    |13               |19.40              |
----
+
 ### Statistical Analysis
-#### **Simple moving average**
+📍 **Simple moving average**
+
 For the next exercise - we will be calculating metrics not just a single window function but multiple in the same query.
 
 For the following time windows: **14, 28, 60, 150 days** - calculate the following metrics for the close_price column:
@@ -401,7 +357,6 @@ LIMIT 10;
 ;
 ```
 
-**Result:**
 |market_date             |close_price |outlier_14|outlier_28|outlier_60|outlier_150|
 |------------------------|------------|----------|----------|----------|-----------|
 |2021-02-24T00:00:00.000Z|50460.234375|0         |0         |0         |1          |
@@ -415,15 +370,16 @@ LIMIT 10;
 |2021-02-16T00:00:00.000Z|49199.871094|0         |0         |1         |1          |
 |2021-02-15T00:00:00.000Z|47945.058594|0         |0         |1         |1          |
 
-**FINDING:**
+**Finding**
+
 There are 1 values for 60 and 150 day outliers for the majority of the rows or is it expected.
 
-**ILLUSTRATION:**
+**Illustration**
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/ndleah/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/SMA.png">
+  <img width="60%" height="60%" src="/IMG/SMA.png">
 </p>
 
-#### **Weighted moving average**
+📍 **Weighted moving average**
 
 In this section, we were tasked by a demanding Cryptocurrency trading client who required custom weights to be applied using the following combination of simple moving averages:
     
@@ -463,7 +419,6 @@ ORDER BY market_date DESC
 LIMIT 10;
 ```
 
-**Result:**
 |market_date             |close_price |custom_moving_avg|
 |------------------------|------------|-----------------|
 |2021-02-24T00:00:00.000Z|50460.23    |42249.35         |
@@ -477,7 +432,7 @@ LIMIT 10;
 |2021-02-16T00:00:00.000Z|49199.87    |36864.40         |
 |2021-02-15T00:00:00.000Z|47945.06    |36344.80         |
 
-#### **Exponential Weighted Moving Average (EWMA)**
+📍 **Exponential Weighted Moving Average (EWMA)**
 ```sql
 DROP TABLE IF EXISTS base_table;
 CREATE TEMP TABLE base_table AS
@@ -548,21 +503,21 @@ FROM ewma_output
 ORDER BY market_date, metric_name;
 ```  
 
-**ILLUSTRATION:**
+**Illustration**
 <p align="center">
-  <img width="100%" height="100%" src="https://github.com/ndleah/Bitcoin-Trading-Volume-And-Prices/blob/main/IMG/EWMA.png">
+  <img width="60%" height="60%" src="IMG/EWMA.png">
 </p>
 
-# Contribution
+## ✨ Contribution
 
 Contributions, issues, and feature requests are welcome!
 
 To contribute to this project, see the GitHub documentation on **[creating a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request)**.
 
-# Support
+
+## 👏 Support
 
 Give a ⭐️ if you like this project!
-___________________________________
 
 <p>&copy; 2021 Leah Nguyen</p>
 
